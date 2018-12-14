@@ -5,9 +5,12 @@ import java.util.List;
 
 
 public interface Input {
-    void setFormatToSubstitute(String formatToClone);
+    void setTemplateToSubstitute(String templateToSubstitute);
 
     void setDataToSubstitute(List<HashMap<String, String>> dataToClone);
 
-    String substitute();
+    List<HashMap<String, String>> getDataToSubstitute();
+
+    String getTemplateToSubstitute();
+
 }

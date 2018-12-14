@@ -1,7 +1,9 @@
 package com.example.substitutor.model.output;
 
-public interface Output {
-    String getSubstitutedData();
+import java.util.List;
 
-    void setSubstitutedData(String clonedData);
+public interface Output {
+    List<String> getSubstitutedData();
+
+    void setSubstitutedData(List<String> substitutedData);
 }

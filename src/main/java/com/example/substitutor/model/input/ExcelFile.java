@@ -10,8 +10,8 @@ public class ExcelFile implements Input {
     private List<HashMap<String, String>> dataToSubstitute;
 
     @Override
-    public void setFormatToSubstitute(String formatToSubstitute) {
-        this.formatToSubstitute = formatToSubstitute;
+    public void setTemplateToSubstitute(String templateToSubstitute) {
+        this.formatToSubstitute = templateToSubstitute;
     }
 
     @Override
@@ -20,8 +20,13 @@ public class ExcelFile implements Input {
     }
 
     @Override
-    public String substitute() {
-        return "INSERT INTO table_name (column1, column2, column3) VALUES " +
-                "(value1, value2, value3);";
+    public List<HashMap<String, String>> getDataToSubstitute() {
+        return dataToSubstitute;
     }
+
+    @Override
+    public String getTemplateToSubstitute() {
+        return formatToSubstitute;
+    }
+
 }

@@ -20,7 +20,7 @@ public class SubstitutorApplicationTests {
 	Substitutor substitutor;
 	Input input;
 
-	String formatToSubstitute = "INSERT INTO table_name (column1, column2, column3) VALUES " +
+	String TEMPLATE_TO_SUBSTITUTE = "INSERT INTO table_name (column1, column2, column3) VALUES " +
 			"(${column1}, ${column2}, ${column3});";
 
 	@Before
@@ -33,13 +33,13 @@ public class SubstitutorApplicationTests {
 	@Test
 	public void canSubstituteDataFromExcelFile(){
 
-		input.setFormatToSubstitute(formatToSubstitute);
+		input.setTemplateToSubstitute(TEMPLATE_TO_SUBSTITUTE);
 		input.setDataToSubstitute(getDataToSubstitute());
 
 		Output output = substitutor.run(input);
 
 		assertEquals("INSERT INTO table_name (column1, column2, column3) VALUES " +
-				"(value1, value2, value3);", output.getSubstitutedData() );
+				"(value1, value2, value3);", output.getSubstitutedData().get(0) );
 	}
 
 	private List<HashMap<String, String>> getDataToSubstitute() {
