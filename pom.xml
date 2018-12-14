@@ -11,7 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>cloner</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>cloner</name>
+	<name>substitutor</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -28,6 +28,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.8.1</version>
 		</dependency>
 	</dependencies>
 

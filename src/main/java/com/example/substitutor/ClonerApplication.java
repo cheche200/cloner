@@ -1,4 +1,4 @@
-package com.example.cloner;
+package com.example.substitutor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
