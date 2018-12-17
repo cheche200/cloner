@@ -13,13 +13,23 @@ public class Substitutor {
 
     Output output = new FileOutput();
 
-    public Output run(Input input) {
-        List<String> substitutedData = substitute(input);
+    public Output substitute(Input input) {
+        validateInputData(input);
+        List<String> substitutedData = applySubstitution(input);
         output.setSubstitutedData(substitutedData);
         return output;
     }
 
-    private List<String> substitute(Input input) {
+    private void validateInputData(Input input) {
+        if(input.getDataToSubstitute() == null){
+            throw new SubstitutorException("There is no input data to substitute.");
+        }
+        if(input.getTemplateToSubstitute() == null){
+            throw new SubstitutorException("There is no template to apply substitution");
+        }
+    }
+
+    private List<String> applySubstitution(Input input) {
         List<String> substitutedData = new ArrayList<>();
         String templateToSubstitute = input.getTemplateToSubstitute();
 
@@ -28,9 +38,12 @@ public class Substitutor {
             String resolvedString = sub.replace(templateToSubstitute);
             substitutedData.add(resolvedString);
         }
-
         return substitutedData;
     }
 
-
+    public class SubstitutorException extends RuntimeException {
+        public SubstitutorException(String message) {
+            super(message);
+        }
+    }
 }

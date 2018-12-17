@@ -29,17 +29,34 @@ public class SubstitutorApplicationTests {
 		input = new ExcelFile();
 	}
 
-
 	@Test
 	public void canSubstituteDataFromExcelFile(){
 
 		input.setTemplateToSubstitute(TEMPLATE_TO_SUBSTITUTE);
 		input.setDataToSubstitute(getDataToSubstitute());
 
-		Output output = substitutor.run(input);
+		Output output = substitutor.substitute(input);
 
 		assertEquals("INSERT INTO table_name (column1, column2, column3) VALUES " +
 				"(value1, value2, value3);", output.getSubstitutedData().get(0) );
+	}
+
+	@Test(expected = Substitutor.SubstitutorException.class)
+	public void shouldNotApplySubstitutionWithoutInputData(){
+
+		input.setTemplateToSubstitute(TEMPLATE_TO_SUBSTITUTE);
+		input.setDataToSubstitute(null);
+
+		substitutor.substitute(input);
+	}
+
+	@Test(expected = Substitutor.SubstitutorException.class)
+	public void shouldNotApplySubstitutionWithoutTemplate(){
+
+		input.setTemplateToSubstitute(null);
+		input.setDataToSubstitute(getDataToSubstitute());
+
+		substitutor.substitute(input);
 	}
 
 	private List<HashMap<String, String>> getDataToSubstitute() {
@@ -53,6 +70,8 @@ public class SubstitutorApplicationTests {
 		dataToSubstitute.add(dataRow);
 		return dataToSubstitute;
 	}
+
+
 
 
 }
