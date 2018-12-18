@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.*;
+import static com.example.substitutor.FixtureData.getDataToSubstitute;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,10 +17,10 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class SubstitutorApplicationTests {
 
-	Substitutor substitutor;
-	Input input;
+	private Substitutor substitutor;
+	private Input input;
 
-	String TEMPLATE_TO_SUBSTITUTE = "INSERT INTO table_name (column1, column2, column3) VALUES " +
+	private String TEMPLATE_TO_SUBSTITUTE = "INSERT INTO table_name (column1, column2, column3) VALUES " +
 			"(${column1}, ${column2}, ${column3});";
 
 	@Before
@@ -58,21 +58,5 @@ public class SubstitutorApplicationTests {
 
 		substitutor.substitute(input);
 	}
-
-	private List<HashMap<String, String>> getDataToSubstitute() {
-		List<HashMap<String,String>> dataToSubstitute = new ArrayList<HashMap<String, String>>();
-
-		HashMap<String,String> dataRow = new HashMap<String, String>();
-		dataRow.put("column1", "value1");
-		dataRow.put("column2", "value2");
-		dataRow.put("column3", "value3");
-
-		dataToSubstitute.add(dataRow);
-		return dataToSubstitute;
-	}
-
-
-
-
 }
 
