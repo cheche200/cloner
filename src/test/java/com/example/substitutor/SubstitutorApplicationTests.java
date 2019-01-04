@@ -17,11 +17,12 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class SubstitutorApplicationTests {
 
+	public static final int INDEX_FIRST_DATA_ROW = 0;
 	private Substitutor substitutor;
 	private Input input;
 
-	private String TEMPLATE_TO_SUBSTITUTE = "INSERT INTO table_name (column1, column2, column3) VALUES " +
-			"(${column1}, ${column2}, ${column3});";
+	private String TEMPLATE_TO_SUBSTITUTE = "INSERT INTO table_name (columnA, columnB, columnC) VALUES " +
+			"(${columnA}, ${columnB}, ${columnC});";
 
 	@Before
 	public void setup(){
@@ -37,8 +38,8 @@ public class SubstitutorApplicationTests {
 
 		Output output = substitutor.substitute(input);
 
-		assertEquals("INSERT INTO table_name (column1, column2, column3) VALUES " +
-				"(value1, value2, value3);", output.getSubstitutedData().get(0) );
+		assertEquals("INSERT INTO table_name (columnA, columnB, columnC) VALUES " +
+				"(valueA2, valueB2, valueC2);", output.getSubstitutedData().get(INDEX_FIRST_DATA_ROW) );
 	}
 
 	@Test(expected = Substitutor.SubstitutorException.class)

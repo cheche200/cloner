@@ -9,9 +9,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.apache.poi.ss.usermodel.CellType.BLANK;
+
 public class ExcelFile implements Input {
 
     public static final String DEFAULT_BLANK_CELL_VALUE = "";
+    public static final int INDEX_OF_EXCEL_SHEET = 0;
+    public static final int INDEX_OF_HEADER_ROW = 0;
+    public static final int CELL_INDEX_FIRST_COLUMN = 0;
+    public static final int INDEX_HEADER_DATA = 0;
     private String formatToSubstitute;
 
     private List<HashMap<String, String>> dataToSubstitute;
@@ -27,32 +33,41 @@ public class ExcelFile implements Input {
        this.dataToSubstitute = extractDataFromExcelFile();
     }
 
+    private XSSFWorkbook openExistingExcelFile(InputStream fileName) throws IOException {
+        return new XSSFWorkbook(fileName);
+    }
+
     private List<HashMap<String,String>> extractDataFromExcelFile() {
+        Sheet sheet = excelFile.getSheetAt(INDEX_OF_EXCEL_SHEET);
+        Row header = sheet.getRow(INDEX_OF_HEADER_ROW);
 
         List<HashMap<String,String>> dataFromExcel = new ArrayList<>();
         HashMap<String,String> dataRow;
 
-        Sheet sheet = excelFile.getSheetAt(0);
-        Row header = sheet.getRow(0);
-
         for (Row row : sheet) {
-            int cellIndex = 0;
-            dataRow = new HashMap();
-            for (Cell cell : row) {
-                String cellValue = getCellValue(cell);
-                dataRow.put(getCellValueFromRow(header, cellIndex),cellValue);
-                cellIndex++;
+            int cellIndex = CELL_INDEX_FIRST_COLUMN;
+            if(!isRowEmpty(row)) {
+                dataRow = new HashMap();
+                for (Cell cell : row) {
+                    String cellValue = getCellValue(cell);
+                    dataRow.put(getCellValueFromRow(header, cellIndex), cellValue);
+                    cellIndex++;
+                }
+                dataFromExcel.add(dataRow);
             }
-
-            dataFromExcel.add(dataRow);
         }
 
-        dataFromExcel.remove(0); //Removing the headers
+        dataFromExcel.remove(INDEX_HEADER_DATA); //Removing the headers
         return dataFromExcel;
     }
 
-    private String getCellValueFromRow(Row header, int cellIndex) {
-        return header.getCell(cellIndex).getStringCellValue();
+    private static boolean isRowEmpty(Row row) {
+        for (int c = row.getFirstCellNum(); c < row.getLastCellNum(); c++) {
+            Cell cell = row.getCell(c);
+            if (cell != null && cell.getCellType() != BLANK)
+                return false;
+        }
+        return true;
     }
 
     private String getCellValue(Cell cell) {
@@ -84,8 +99,8 @@ public class ExcelFile implements Input {
         return cellValue;
     }
 
-    private XSSFWorkbook openExistingExcelFile(InputStream fileName) throws IOException {
-            return new XSSFWorkbook(fileName);
+    private String getCellValueFromRow(Row row, int cellIndex) {
+        return row.getCell(cellIndex).getStringCellValue();
     }
 
     @Override

@@ -18,16 +18,31 @@ import java.util.List;
 @SpringBootTest
 public class ExcelFileTests {
 
+    public static final int INDEX_FIRST_DATA_ROW = 0;
+
+
+
+    @Test
+    public void shouldNotReadEmptyRowsFromExcelFile() throws IOException {
+        InputStream inputStream = getClass().getResourceAsStream("/ExcelTest.xlsx");
+        ExcelFile excelFile = new ExcelFile(inputStream);
+
+        int expectedNumOfRowsWithData = 3;
+        int actualNumOfRowsWithData = excelFile.getDataToSubstitute().size();
+
+        assertEquals(expectedNumOfRowsWithData, actualNumOfRowsWithData);
+    }
+
     @Test
     public void canReadInputDataFromExcelFile() throws IOException {
         InputStream inputStream = getClass().getResourceAsStream("/ExcelTest.xlsx");
         ExcelFile excelFile = new ExcelFile(inputStream);
 
-        List<HashMap<String, String>> expected = getDataToSubstitute();
+        List<HashMap<String, String>> expectedRow = getDataToSubstitute();
 
-        List<HashMap<String, String>> actual = excelFile.getDataToSubstitute();
+        List<HashMap<String, String>> actualRow = excelFile.getDataToSubstitute();
 
-        assertEquals(expected, actual);
+        assertEquals(expectedRow.get(INDEX_FIRST_DATA_ROW), actualRow.get(INDEX_FIRST_DATA_ROW));
     }
 
 }
