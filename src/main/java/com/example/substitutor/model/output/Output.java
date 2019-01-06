@@ -6,4 +6,6 @@ public interface Output {
     List<String> getSubstitutedData();
 
     void setSubstitutedData(List<String> substitutedData);
+
+    String format();
 }

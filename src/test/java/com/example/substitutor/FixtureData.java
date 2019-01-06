@@ -30,4 +30,18 @@ public class FixtureData {
         return dataToSubstitute;
     }
 
+
+    public static  String getExpectedOutputFormat() {
+        return "INSERT INTO table_name (columnA, columnB, columnC) VALUES " +
+                "(valueA2, valueB2, valueC2);"
+                + "\n//"+
+                "INSERT INTO table_name (columnA, columnB, columnC) VALUES " +
+                "(valueA3, valueB3, valueC3);"
+                + "\n//"+
+                "INSERT INTO table_name (columnA, columnB, columnC) VALUES " +
+                "(valueA4, valueB4, valueC4);"
+                + "\n//";
+
+    }
+
 }

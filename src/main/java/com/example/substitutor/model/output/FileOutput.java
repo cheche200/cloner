@@ -16,4 +16,13 @@ public class FileOutput implements Output {
     public void setSubstitutedData(List<String> substitutedData) {
         this.substitutedData = substitutedData;
     }
+
+    @Override
+    public String format() {
+        String formattedOutput = "";
+        for(String dataRow : substitutedData){
+            formattedOutput += dataRow + "\n//";
+        }
+        return formattedOutput;
+    }
 }
