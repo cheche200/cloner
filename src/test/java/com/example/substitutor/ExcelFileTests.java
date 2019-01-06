@@ -18,9 +18,7 @@ import java.util.List;
 @SpringBootTest
 public class ExcelFileTests {
 
-    public static final int INDEX_FIRST_DATA_ROW = 0;
-
-
+    public static final int INDEX_FIRST_ROW_WITH_DATA = 0;
 
     @Test
     public void shouldNotReadEmptyRowsFromExcelFile() throws IOException {
@@ -39,10 +37,9 @@ public class ExcelFileTests {
         ExcelFile excelFile = new ExcelFile(inputStream);
 
         List<HashMap<String, String>> expectedRow = getDataToSubstitute();
-
         List<HashMap<String, String>> actualRow = excelFile.getDataToSubstitute();
 
-        assertEquals(expectedRow.get(INDEX_FIRST_DATA_ROW), actualRow.get(INDEX_FIRST_DATA_ROW));
+        assertEquals(expectedRow.get(INDEX_FIRST_ROW_WITH_DATA), actualRow.get(INDEX_FIRST_ROW_WITH_DATA));
     }
 
 }

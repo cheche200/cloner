@@ -1,8 +1,6 @@
 package com.example.substitutor;
 
 import com.example.substitutor.model.input.Input;
-import com.example.substitutor.model.output.Output;
-import com.example.substitutor.model.output.FileOutput;
 import com.example.substitutor.model.template.Template;
 import org.apache.commons.text.StringSubstitutor;
 
@@ -12,13 +10,9 @@ import java.util.Map;
 
 public class Substitutor {
 
-    Output output = new FileOutput();
-
-    public Output substitute(Input input, Template template) {
+    public List<String> substitute(Input input, Template template) {
         validateData(input, template);
-        List<String> substitutedData = applySubstitution(input, template);
-        output.setSubstitutedData(substitutedData);
-        return output;
+        return applySubstitution(input, template);
     }
 
     private void validateData(Input input, Template template) {

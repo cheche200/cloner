@@ -2,6 +2,7 @@ package com.example.substitutor;
 
 import com.example.substitutor.model.input.Input;
 import com.example.substitutor.model.input.ExcelFile;
+import com.example.substitutor.model.output.FileOutput;
 import com.example.substitutor.model.output.Output;
 import com.example.substitutor.model.template.Template;
 import com.example.substitutor.model.template.TemplateFile;
@@ -23,6 +24,7 @@ public class SubstitutorApplicationTests {
 	private Substitutor substitutor;
 	private Input input;
 	private Template template;
+	private Output output;
 
 	private String TEMPLATE_TO_SUBSTITUTE = "INSERT INTO table_name (columnA, columnB, columnC) VALUES " +
 			"(${columnA}, ${columnB}, ${columnC});";
@@ -32,6 +34,7 @@ public class SubstitutorApplicationTests {
 		substitutor = new Substitutor();
 		input = new ExcelFile();
 		template = new TemplateFile();
+		output = new FileOutput();
 
 	}
 
@@ -42,7 +45,7 @@ public class SubstitutorApplicationTests {
 
 		input.setDataToSubstitute(getDataToSubstitute());
 
-		Output output = substitutor.substitute(input, template);
+		output.setSubstitutedData(substitutor.substitute(input, template));
 
 		assertEquals("INSERT INTO table_name (columnA, columnB, columnC) VALUES " +
 				"(valueA2, valueB2, valueC2);", output.getSubstitutedData().get(INDEX_FIRST_DATA_ROW) );
