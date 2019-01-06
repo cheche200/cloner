@@ -3,6 +3,8 @@ package com.example.substitutor;
 import com.example.substitutor.model.input.Input;
 import com.example.substitutor.model.input.ExcelFile;
 import com.example.substitutor.model.output.Output;
+import com.example.substitutor.model.template.Template;
+import com.example.substitutor.model.template.TemplateFile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,7 @@ public class SubstitutorApplicationTests {
 	public static final int INDEX_FIRST_DATA_ROW = 0;
 	private Substitutor substitutor;
 	private Input input;
+	private Template template;
 
 	private String TEMPLATE_TO_SUBSTITUTE = "INSERT INTO table_name (columnA, columnB, columnC) VALUES " +
 			"(${columnA}, ${columnB}, ${columnC});";
@@ -28,15 +31,18 @@ public class SubstitutorApplicationTests {
 	public void setup(){
 		substitutor = new Substitutor();
 		input = new ExcelFile();
+		template = new TemplateFile();
+
 	}
 
 	@Test
-	public void canSubstituteDataFromExcelFile(){
+	public void canSubstituteDataFromExcelFileUsingTemplate(){
 
-		input.setTemplateToSubstitute(TEMPLATE_TO_SUBSTITUTE);
+		template.setTemplate(TEMPLATE_TO_SUBSTITUTE);
+
 		input.setDataToSubstitute(getDataToSubstitute());
 
-		Output output = substitutor.substitute(input);
+		Output output = substitutor.substitute(input, template);
 
 		assertEquals("INSERT INTO table_name (columnA, columnB, columnC) VALUES " +
 				"(valueA2, valueB2, valueC2);", output.getSubstitutedData().get(INDEX_FIRST_DATA_ROW) );
@@ -45,19 +51,19 @@ public class SubstitutorApplicationTests {
 	@Test(expected = Substitutor.SubstitutorException.class)
 	public void shouldNotApplySubstitutionWithoutInputData(){
 
-		input.setTemplateToSubstitute(TEMPLATE_TO_SUBSTITUTE);
+		template.setTemplate(TEMPLATE_TO_SUBSTITUTE);
 		input.setDataToSubstitute(null);
 
-		substitutor.substitute(input);
+		substitutor.substitute(input, template);
 	}
 
 	@Test(expected = Substitutor.SubstitutorException.class)
 	public void shouldNotApplySubstitutionWithoutTemplate(){
 
-		input.setTemplateToSubstitute(null);
+		template.setTemplate(null);
 		input.setDataToSubstitute(getDataToSubstitute());
 
-		substitutor.substitute(input);
+		substitutor.substitute(input, template);
 	}
 }
 

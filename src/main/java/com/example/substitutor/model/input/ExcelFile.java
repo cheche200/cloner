@@ -18,7 +18,6 @@ public class ExcelFile implements Input {
     public static final int INDEX_OF_HEADER_ROW = 0;
     public static final int CELL_INDEX_FIRST_COLUMN = 0;
     public static final int INDEX_HEADER_DATA = 0;
-    private String formatToSubstitute;
 
     private List<HashMap<String, String>> dataToSubstitute;
 
@@ -104,11 +103,6 @@ public class ExcelFile implements Input {
     }
 
     @Override
-    public void setTemplateToSubstitute(String templateToSubstitute) {
-        this.formatToSubstitute = templateToSubstitute;
-    }
-
-    @Override
     public void setDataToSubstitute(List<HashMap<String, String>> dataToSubstitute ) {
        this.dataToSubstitute =  dataToSubstitute;
     }
@@ -116,11 +110,6 @@ public class ExcelFile implements Input {
     @Override
     public List<HashMap<String, String>> getDataToSubstitute() {
         return dataToSubstitute;
-    }
-
-    @Override
-    public String getTemplateToSubstitute() {
-        return formatToSubstitute;
     }
 
 }
